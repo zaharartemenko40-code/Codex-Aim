@@ -1,14 +1,14 @@
-#include <ll/api/mod/NativeMod.h>
-#include <ll/api/event/EventBus.h>
-#include <ll/api/event/player/PlayerTickEvent.h>
+#include <pl/Mod.hpp>
+#include <pl/ModMenu.hpp>
+#include <pl/Input.hpp>
+#include <pl/Config.hpp>
+#include <pl/memory/Hook.hpp>
 #include <mc/world/actor/player/Player.h>
 #include <mc/world/actor/Actor.h>
 #include <mc/deps/core/math/Vec2.h>
 #include <mc/deps/core/math/Vec3.h>
 #include <cmath>
 #include <algorithm>
-
-using namespace ll::event;
 
 class CodexAim {
 public:
@@ -99,19 +99,12 @@ public:
             }
         }
     }
-
-    bool load() {
-        auto& logger = ll::mod::NativeMod::current()->getLogger();
-        logger.info("CodexAim loaded!");
-        EventBus::getInstance().subscribe<PlayerTickEvent>(
-            [this](PlayerTickEvent& event) {
-                this->onTick(event.self());
-            }
-        );
-        return true;
-    }
-    bool enable() { return true; }
-    bool disable() { return true; }
 };
 
-LL_REGISTER_MOD(CodexAim, CodexAim::getInstance());
+// Регистрация мода через API PreLoader
+PL_REGISTER_MOD(CodexAim, [](auto& mod) {
+    mod.load = []() { return true; };
+    mod.enable = []() { return true; };
+    mod.disable = []() { return true; };
+    // Здесь можно подписаться на события через pl::API
+});

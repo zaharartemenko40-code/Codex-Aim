@@ -3,12 +3,9 @@ project(CodexAim)
 
 set(CMAKE_CXX_STANDARD 20)
 
-# Ищем скачанный Boost
-find_package(Boost REQUIRED)
-include_directories(${Boost_INCLUDE_DIRS})
-include_directories($ENV{BOOST_ROOT})
+# Говорим компилятору искать заголовки Boost в скачанной папке
+include_directories(${CMAKE_SOURCE_DIR}/boost_1_84_0)
 
-# Скачиваем PreLoader SDK
 include(FetchContent)
 FetchContent_Declare(
     preloader_android

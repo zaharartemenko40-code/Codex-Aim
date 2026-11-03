@@ -1,0 +1,10 @@
+add_rules("mode.debug", "mode.release")
+add_repositories("liteldev-repo https://github.com/LiteLDev/xmake-repo.git")
+add_requires("levilamina")
+
+target("CodexAim")
+    add_rules("levilamina.mod")
+    add_packages("levilamina")
+    set_kind("shared")
+    add_files("src/*.cpp")
+    set_languages("c++20")

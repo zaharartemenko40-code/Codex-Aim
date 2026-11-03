@@ -1,0 +1,8 @@
+{
+  "type": "preload-native",
+  "name": "CodexAim",
+  "author": "arest",
+  "version": "1.0.0",
+  "entry": "libCodexAim.so",
+  "minecraft_versions": ["1.26.60.4"]
+}

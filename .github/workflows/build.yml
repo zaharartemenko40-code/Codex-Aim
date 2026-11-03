@@ -1,0 +1,25 @@
+name: Build Mod
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup NDK
+      uses: nttld/setup-ndk@v1
+      id: setup-ndk
+      with:
+        ndk-version: r26d
+    - name: Setup Xmake
+      uses: xmake-io/github-action-setup-xmake@v1
+    - name: Compile
+      run: |
+        xmake f -p android -a arm64-v8a --ndk=$ANDROID_NDK_HOME
+        xmake
+      env:
+        ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+    - name: Upload
+      uses: actions/upload-artifact@v3
+      with:
+        name: CodexAim-Mod
+        path: build/**/libCodexAim.so

@@ -14,16 +14,12 @@ jobs:
         unzip -q android-ndk-r26d-linux.zip
         echo "ANDROID_NDK_HOME=$GITHUB_WORKSPACE/android-ndk-r26d" >> $GITHUB_ENV
 
-    - name: Install Boost
-      run: sudo apt-get update && sudo apt-get install -y libboost-all-dev
-
     - name: Configure CMake
       run: |
         cmake -B build \
           -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake \
           -DANDROID_ABI=arm64-v8a \
-          -DANDROID_PLATFORM=android-21 \
-          -DBoost_INCLUDE_DIR=/usr/include
+          -DANDROID_PLATFORM=android-21
 
     - name: Build
       run: cmake --build build --config Release

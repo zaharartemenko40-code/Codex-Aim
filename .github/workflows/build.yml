@@ -14,11 +14,6 @@ jobs:
         unzip -q android-ndk-r26d-linux.zip
         echo "ANDROID_NDK_HOME=$GITHUB_WORKSPACE/android-ndk-r26d" >> $GITHUB_ENV
 
-    - name: Download Boost
-      run: |
-        wget -q https://archives.boost.io/release/1.84.0/source/boost_1_84_0.tar.gz
-        tar -xzf boost_1_84_0.tar.gz
-
     - name: Configure CMake
       run: |
         cmake -B build \

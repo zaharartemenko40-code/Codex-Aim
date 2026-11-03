@@ -3,10 +3,17 @@ project(CodexAim)
 
 set(CMAKE_CXX_STANDARD 20)
 
-# Говорим компилятору искать заголовки Boost в скачанной папке
-include_directories(${CMAKE_SOURCE_DIR}/boost_1_84_0)
-
 include(FetchContent)
+
+# Скачиваем только нужную библиотеку PFR для Boost
+FetchContent_Declare(
+    pfr
+    GIT_REPOSITORY https://github.com/boostorg/pfr.git
+    GIT_TAG boost-1.84.0
+)
+FetchContent_MakeAvailable(pfr)
+
+# Скачиваем SDK PreLoader
 FetchContent_Declare(
     preloader_android
     GIT_REPOSITORY https://github.com/LiteLDev/preloader-android.git
@@ -15,4 +22,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(preloader_android)
 
 add_library(CodexAim SHARED src/main.cpp)
+
+# Линкуем наш мод с PreLoader и PFR
 target_link_libraries(CodexAim PRIVATE preloader)
+target_include_directories(CodexAim PRIVATE ${pfr_SOURCE_DIR}/include)
